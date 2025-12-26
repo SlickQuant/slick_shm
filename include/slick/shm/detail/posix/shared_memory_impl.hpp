@@ -37,6 +37,7 @@ public:
         : shm_fd_(other.shm_fd_),
           mapped_addr_(other.mapped_addr_),
           name_(std::move(other.name_)),
+          original_name_(std::move(other.original_name_)),
           size_(other.size_),
           mode_(other.mode_),
           owns_shm_(other.owns_shm_) {
@@ -53,6 +54,7 @@ public:
             shm_fd_ = other.shm_fd_;
             mapped_addr_ = other.mapped_addr_;
             name_ = std::move(other.name_);
+            original_name_ = std::move(other.original_name_);
             size_ = other.size_;
             mode_ = other.mode_;
             owns_shm_ = other.owns_shm_;
@@ -74,7 +76,8 @@ public:
             return make_error_code(errc::invalid_size);
         }
 
-        name_ = format_name(name);
+        original_name_ = name;  // Store original name for accessor
+        name_ = format_name(name);  // Store formatted name for POSIX API
         size_ = size;
         mode_ = access;
 
@@ -123,7 +126,8 @@ public:
             return make_error_code(errc::invalid_name);
         }
 
-        name_ = format_name(name);
+        original_name_ = name;  // Store original name for accessor
+        name_ = format_name(name);  // Store formatted name for POSIX API
         mode_ = access;
         owns_shm_ = false;  // We didn't create it, so don't unlink it
 
@@ -173,7 +177,7 @@ public:
     }
 
     const char* name() const noexcept {
-        return name_.c_str();
+        return original_name_.c_str();
     }
 
     bool is_valid() const noexcept {
@@ -210,7 +214,8 @@ public:
 private:
     int shm_fd_ = -1;
     void* mapped_addr_ = nullptr;
-    std::string name_;
+    std::string name_;  // Formatted name with "/" prefix for POSIX API
+    std::string original_name_;  // Original name without prefix for public accessor
     std::size_t size_ = 0;
     access_mode mode_ = access_mode::read_write;
     bool owns_shm_ = false;  // Track if we created it (for unlinking)

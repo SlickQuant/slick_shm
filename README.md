@@ -3,6 +3,9 @@
 A modern C++17 header-only, cross-platform shared memory library.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Header-only](https://img.shields.io/badge/header--only-yes-brightgreen.svg)](#installation)
+[![CI](https://github.com/SlickQuant/slick_shm/actions/workflows/ci.yml/badge.svg)](https://github.com/SlickQuant/slick_shm/actions/workflows/ci.yml)
+[![GitHub release](https://img.shields.io/github/v/release/SlickQuant/slick_shm)](https://github.com/SlickQuant/slick_shm/releases)
 
 ## Features
 
