@@ -118,6 +118,21 @@ public:
             return ec;
         }
 
+        // Query the actual allocated size (OS may round up)
+        struct stat sb;
+        if (fstat(shm_fd_, &sb) == -1) {
+            std::error_code ec = get_errno_error();
+            ::close(shm_fd_);
+            shm_fd_ = -1;
+            if (owns_shm_) {
+                shm_unlink(name_.c_str());
+                owns_shm_ = false;
+            }
+            return ec;
+        }
+
+        size_ = static_cast<std::size_t>(sb.st_size);
+
         return map_impl();
     }
 
