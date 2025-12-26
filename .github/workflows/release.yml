@@ -55,9 +55,6 @@ jobs:
             #### Header-Only
             Download the `slick_shm-${{ steps.get_version.outputs.VERSION }}-headers.zip` from the Assets below, extract it, and copy the `slick/` directory to your project's include path.
 
-            ### What's Changed
-            See the [CHANGELOG](https://github.com/SlickQuant/slick_shm/blob/main/CHANGELOG.md) for details.
-
             ### Platform Support
             - ✅ Windows (MSVC 2017+, MinGW)
             - ✅ Linux (GCC 7+, Clang 5+)
