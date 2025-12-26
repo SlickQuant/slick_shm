@@ -23,14 +23,18 @@ target_include_directories(slick_shm INTERFACE
 target_compile_features(slick_shm INTERFACE cxx_std_17)
 
 # Platform-specific linking
-if(WIN32)
-    # No special libraries needed on Windows
-elseif(UNIX)
-    # Link with rt (realtime) for shm_open/shm_unlink on POSIX systems
+if(APPLE)
+    # macOS doesn't need rt library (shm_open/shm_unlink are in libc)
     # pthread may be needed for some implementations
+    find_package(Threads)
+    if(Threads_FOUND)
+        target_link_libraries(slick_shm INTERFACE Threads::Threads)
+    endif()
+elseif(UNIX)
+    # Linux needs rt (realtime) for shm_open/shm_unlink
     target_link_libraries(slick_shm INTERFACE rt)
 
-    # On some systems (older Linux), pthread is also needed
+    # pthread may be needed for some implementations
     find_package(Threads)
     if(Threads_FOUND)
         target_link_libraries(slick_shm INTERFACE Threads::Threads)
