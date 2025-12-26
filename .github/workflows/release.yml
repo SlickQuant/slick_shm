@@ -1,0 +1,61 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v0.1.0, v1.0.0, etc.
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## slick_shm ${{ github.ref_name }}
+
+            A modern C++17 header-only, cross-platform shared memory library.
+
+            ### Installation
+
+            #### vcpkg
+            ```bash
+            vcpkg install slick-shm
+            ```
+
+            #### CMake FetchContent
+            ```cmake
+            FetchContent_Declare(
+                slick_shm
+                GIT_REPOSITORY https://github.com/SlickQuant/slick_shm.git
+                GIT_TAG ${{ github.ref_name }}
+            )
+            FetchContent_MakeAvailable(slick_shm)
+            target_link_libraries(your_target PRIVATE slick::shm)
+            ```
+
+            #### Header-Only
+            Download and extract the source, then copy the `include/slick` directory to your project.
+
+            ### What's Changed
+            See the [CHANGELOG](https://github.com/SlickQuant/slick_shm/blob/main/CHANGELOG.md) for details.
+
+            ### Platform Support
+            - ✅ Windows (MSVC 2017+, MinGW)
+            - ✅ Linux (GCC 7+, Clang 5+)
+            - ✅ macOS (Apple Clang)
+          draft: false
+          prerelease: false
+          generate_release_notes: true
