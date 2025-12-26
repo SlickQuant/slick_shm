@@ -287,15 +287,18 @@ Tests cover:
 ### Linux/macOS (POSIX)
 
 - Uses `shm_open()` / `mmap()` backed by tmpfs
-- Names automatically prefixed with `/`
+- Names automatically prefixed with `/` (handled internally)
 - **Important**: Must call `shared_memory::remove()` to clean up
-- macOS has shorter name limit (31 chars)
+- **Name length limits**:
+  - macOS: 31 characters maximum (including the `/` prefix)
+  - Linux: 255 characters maximum
+  - Recommendation: Keep names ≤30 characters for cross-platform compatibility
 
 See [platform_notes.md](docs/platform_notes.md) for detailed information.
 
 ## Best Practices
 
-1. **Name portability**: Use short (≤31 chars), alphanumeric names
+1. **Name portability**: Use short (≤30 chars), alphanumeric names for cross-platform compatibility
 2. **Always cleanup**: Call `remove()` for portable code
 3. **Synchronize access**: Use `std::atomic` or external synchronization
 4. **Handle errors**: Always check for errors (exceptions or `is_valid()`)

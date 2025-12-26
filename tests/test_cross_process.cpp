@@ -13,7 +13,8 @@ namespace {
 std::string unique_name(const char* prefix) {
     auto now = std::chrono::system_clock::now().time_since_epoch();
     auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
-    return std::string(prefix) + "_" + std::to_string(millis);
+    // Use modulo to keep the timestamp shorter while still being unique (macOS has 31-char limit)
+    return std::string(prefix) + std::to_string(millis % 100000000);
 }
 
 struct shm_cleanup {
