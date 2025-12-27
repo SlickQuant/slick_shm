@@ -2,10 +2,6 @@
 
 #ifdef SLICK_SHM_POSIX
 
-#include "../platform.hpp"
-#include "../../types.hpp"
-#include "../../error.hpp"
-
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h>
