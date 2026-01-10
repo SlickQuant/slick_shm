@@ -1,4 +1,4 @@
-# slick_shm API Reference
+# slick-shm API Reference
 
 ## Table of Contents
 

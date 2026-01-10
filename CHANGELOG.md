@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.1.2] - 2026-01-10
+
+ - Rename repository from slick_shm to slick-shm (hyphenated naming follows recommended convention)
+ - Update documentation and build references to use new repository name
+
 ## [v0.1.1] - 2025-12-26
 
  - Fix Linux build enum multiple definition error

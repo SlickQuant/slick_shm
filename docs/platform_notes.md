@@ -1,6 +1,6 @@
 # Platform-Specific Notes
 
-This document describes platform-specific behavior and considerations for slick_shm.
+This document describes platform-specific behavior and considerations for slick-shm.
 
 ## Table of Contents
 

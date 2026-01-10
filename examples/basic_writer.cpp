@@ -24,7 +24,7 @@ int main() {
         std::cout << "  Address: " << shm.data() << std::endl;
 
         // Write some data
-        const char* message = "Hello from slick_shm! This is a test message.";
+        const char* message = "Hello from slick-shm! This is a test message.";
         std::memcpy(shm.data(), message, std::strlen(message) + 1);
 
         std::cout << "\nWrote message to shared memory: \"" << message << "\"" << std::endl;

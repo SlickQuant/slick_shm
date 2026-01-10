@@ -24,7 +24,7 @@ enum class errc {
 class error_category_impl : public std::error_category {
 public:
     const char* name() const noexcept override {
-        return "slick_shm";
+        return "slick-shm";
     }
 
     std::string message(int ev) const override {

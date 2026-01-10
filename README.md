@@ -1,11 +1,11 @@
-# slick_shm
+# slick-shm
 
 A modern C++17 header-only, cross-platform shared memory library.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Header-only](https://img.shields.io/badge/header--only-yes-brightgreen.svg)](#installation)
-[![CI](https://github.com/SlickQuant/slick_shm/actions/workflows/ci.yml/badge.svg)](https://github.com/SlickQuant/slick_shm/actions/workflows/ci.yml)
-[![GitHub release](https://img.shields.io/github/v/release/SlickQuant/slick_shm)](https://github.com/SlickQuant/slick_shm/releases)
+[![CI](https://github.com/SlickQuant/slick-shm/actions/workflows/ci.yml/badge.svg)](https://github.com/SlickQuant/slick-shm/actions/workflows/ci.yml)
+[![GitHub release](https://img.shields.io/github/v/release/SlickQuant/slick-shm)](https://github.com/SlickQuant/slick-shm/releases)
 
 ## Features
 
@@ -47,7 +47,7 @@ vcpkg install slick-shm
 Then in your CMakeLists.txt:
 
 ```cmake
-find_package(slick_shm CONFIG REQUIRED)
+find_package(slick-shm CONFIG REQUIRED)
 target_link_libraries(your_target PRIVATE slick::shm)
 ```
 
@@ -64,29 +64,29 @@ Simply copy the `include/slick` directory to your project and include it:
 ```cmake
 include(FetchContent)
 
-# Disable slick_shm tests and examples
+# Disable slick-shm tests and examples
 set(SLICK_SHM_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(SLICK_SHM_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(SLICK_SHM_INSTALL OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(
-    slick_shm
-    GIT_REPOSITORY https://github.com/SlickQuant/slick_shm.git
-    GIT_TAG v0.1.0  # See https://github.com/SlickQuant/slick_shm/releases for latest version
+    slick-shm
+    GIT_REPOSITORY https://github.com/SlickQuant/slick-shm.git
+    GIT_TAG v0.1.0  # See https://github.com/SlickQuant/slick-shm/releases for latest version
 )
-FetchContent_MakeAvailable(slick::slick_shm)
+FetchContent_MakeAvailable(slick::slick-shm)
 
-target_link_libraries(your_target PRIVATE slick::slick_shm)
+target_link_libraries(your_target PRIVATE slick::slick-shm)
 ```
 
 #### CMake Integration
 
 ```cmake
 # Option 1: Add as subdirectory
-add_subdirectory(path/to/slick_shm)
+add_subdirectory(path/to/slick-shm)
 target_link_libraries(your_target PRIVATE slick::shm)
 
 # Option 2: Install and find_package
-find_package(slick_shm REQUIRED)
+find_package(slick-shm REQUIRED)
 target_link_libraries(your_target PRIVATE slick::shm)
 ```
 
@@ -148,8 +148,8 @@ int main() {
 
 ```bash
 # Clone the repository
-git clone https://github.com/SlickQuant/slick_shm.git
-cd slick_shm
+git clone https://github.com/SlickQuant/slick-shm.git
+cd slick-shm
 
 # Create build directory
 mkdir build && cd build

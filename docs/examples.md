@@ -1,6 +1,6 @@
 # Examples
 
-This document provides practical examples of using the slick_shm library.
+This document provides practical examples of using the slick-shm library.
 
 ## Table of Contents
 
