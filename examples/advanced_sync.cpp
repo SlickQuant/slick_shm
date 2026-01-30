@@ -70,10 +70,14 @@ int main() {
         shared_memory shm(shm_name, shm_size, create_only);
 
         // Initialize the shared data
+        // Note: Do NOT use placement new on std::atomic in shared memory across processes.
+        // std::atomic's constructor may not be safe for cross-process initialization.
+        // Instead, use explicit store operations on already-constructed atomics.
         auto* data = static_cast<shared_data*>(shm.data());
-        new (data) shared_data();  // Placement new to initialize atomics
-        data->counter.store(0, std::memory_order_relaxed);
-        data->done.store(false, std::memory_order_relaxed);
+
+        // Initialize atomics with release semantics to establish happens-before relationship
+        data->counter.store(0, std::memory_order_release);
+        data->done.store(false, std::memory_order_release);
         std::memset(data->message, 0, sizeof(data->message));
 
         std::cout << "Shared memory created and initialized." << std::endl;
@@ -92,7 +96,8 @@ int main() {
 
         std::cout << "\nExample completed successfully!" << std::endl;
 
-        // Cleanup
+        // Cleanup: Close and unmap before removing to avoid race with destructor
+        shm.close();
         shared_memory::remove(shm_name);
 
     } catch (const shared_memory_error& e) {

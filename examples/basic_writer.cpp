@@ -38,14 +38,19 @@ int main() {
         std::cout << "Cleaning up..." << std::endl;
 
     } catch (const shared_memory_error& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        std::cerr << "Error code: " << e.code().value() << std::endl;
+        std::cerr << "Error creating shared memory '" << shm_name << "': "
+                  << e.what() << std::endl;
+        std::cerr << "Error code: " << e.code() << " ("
+                  << e.code().message() << ")" << std::endl;
 
         // Try to cleanup if it already exists
         if (e.code() == errc::already_exists) {
-            std::cerr << "\nShared memory already exists. Removing it..." << std::endl;
+            std::cerr << "\nShared memory '" << shm_name
+                      << "' already exists. Removing it..." << std::endl;
             if (shared_memory::remove(shm_name)) {
                 std::cerr << "Removed successfully. Please run again." << std::endl;
+            } else {
+                std::cerr << "Failed to remove. Please remove manually." << std::endl;
             }
         }
 

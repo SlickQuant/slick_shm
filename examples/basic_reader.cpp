@@ -27,11 +27,14 @@ int main() {
         std::cin.get();
 
     } catch (const shared_memory_error& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        std::cerr << "Error code: " << e.code().value() << std::endl;
+        std::cerr << "Error opening shared memory '" << shm_name << "': "
+                  << e.what() << std::endl;
+        std::cerr << "Error code: " << e.code() << " ("
+                  << e.code().message() << ")" << std::endl;
 
         if (e.code() == errc::not_found) {
-            std::cerr << "\nShared memory not found. Make sure 'basic_writer' is running first." << std::endl;
+            std::cerr << "\nShared memory '" << shm_name
+                      << "' not found. Make sure 'basic_writer' is running first." << std::endl;
         }
 
         return 1;

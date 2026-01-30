@@ -29,6 +29,13 @@ namespace shm {
  * Thread safety: Individual shared_memory objects are not thread-safe.
  * Multiple threads can use different shared_memory objects to access the same
  * shared memory segment.
+ *
+ * @note Resizing: Shared memory cannot be resized after creation. While POSIX
+ *       systems could theoretically support resizing via ftruncate(), Windows
+ *       CreateFileMapping does not support resizing. For cross-platform
+ *       compatibility, this library does not expose resize operations.
+ *       If you need dynamic sizing, allocate the maximum size upfront or
+ *       use a memory allocator within the fixed-size shared memory region.
  */
 class shared_memory {
 public:
@@ -215,6 +222,10 @@ public:
     /**
      * @brief Get pointer to shared memory data
      * @return Pointer to the mapped memory, or nullptr if invalid
+     * @note Alignment: On Windows, memory is aligned to allocation granularity (typically 64KB).
+     *       On POSIX systems, memory is page-aligned (typically 4KB). This is sufficient
+     *       for all standard types. For types with special alignment requirements beyond
+     *       page alignment, users must verify alignment manually.
      */
     void* data() noexcept {
         return impl_.data();
@@ -223,6 +234,7 @@ public:
     /**
      * @brief Get const pointer to shared memory data
      * @return Const pointer to the mapped memory, or nullptr if invalid
+     * @note See data() for alignment guarantees.
      */
     const void* data() const noexcept {
         return impl_.data();
@@ -230,7 +242,11 @@ public:
 
     /**
      * @brief Get the size of the shared memory in bytes
-     * @return Size in bytes, or 0 if invalid
+     * @return Actual allocated size in bytes, or 0 if invalid
+     * @note The actual size may be larger than requested due to page rounding.
+     *       On Windows, sizes are rounded to the system's allocation granularity (typically 64KB).
+     *       On POSIX systems, sizes may be rounded to page size (typically 4KB).
+     *       Use this method to get the actual usable size.
      */
     std::size_t size() const noexcept {
         return impl_.size();

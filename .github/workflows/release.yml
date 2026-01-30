@@ -46,6 +46,7 @@ jobs:
       - name: Create header archive
         run: |
           zip -r slick-shm-${{ steps.get_version.outputs.VERSION }}.zip include/
+          tar -czf ./slick-shm-${{ steps.get_version.outputs.VERSION }}.tar.gz include/
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -61,3 +62,4 @@ jobs:
           generate_release_notes: false
           files: |
             slick-shm-${{ steps.get_version.outputs.VERSION }}.zip
+            slick-shm-${{ steps.get_version.outputs.VERSION }}.tar.gz
