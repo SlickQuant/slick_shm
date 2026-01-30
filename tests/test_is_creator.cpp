@@ -7,7 +7,7 @@
 using namespace slick::shm;
 
 TEST_CASE("is_creator() returns true for create_only", "[is_creator]") {
-    const char* name = "test_is_creator_create_only";
+    const char* name = "test_creator_create";
 
     // Clean up any existing
     shared_memory::remove(name);
@@ -21,7 +21,7 @@ TEST_CASE("is_creator() returns true for create_only", "[is_creator]") {
 }
 
 TEST_CASE("is_creator() returns false for open_existing", "[is_creator]") {
-    const char* name = "test_is_creator_open_existing";
+    const char* name = "test_creator_open";
 
     // Clean up any existing
     shared_memory::remove(name);
@@ -42,7 +42,7 @@ TEST_CASE("is_creator() returns false for open_existing", "[is_creator]") {
 }
 
 TEST_CASE("is_creator() for open_or_create - creates new", "[is_creator]") {
-    const char* name = "test_is_creator_open_or_create_new";
+    const char* name = "test_creator_ooc_new";
 
     // Clean up any existing
     shared_memory::remove(name);
@@ -57,7 +57,7 @@ TEST_CASE("is_creator() for open_or_create - creates new", "[is_creator]") {
 }
 
 TEST_CASE("is_creator() for open_or_create - opens existing", "[is_creator]") {
-    const char* name = "test_is_creator_open_or_create_existing";
+    const char* name = "test_creator_ooc_open";
 
     // Clean up any existing
     shared_memory::remove(name);
@@ -77,7 +77,7 @@ TEST_CASE("is_creator() for open_or_create - opens existing", "[is_creator]") {
 }
 
 TEST_CASE("is_creator() for open_always - creates new", "[is_creator]") {
-    const char* name = "test_is_creator_open_always_new";
+    const char* name = "test_creator_oa_new";
 
     // Clean up any existing
     shared_memory::remove(name);
@@ -92,7 +92,7 @@ TEST_CASE("is_creator() for open_always - creates new", "[is_creator]") {
 }
 
 TEST_CASE("is_creator() for open_always - opens existing", "[is_creator]") {
-    const char* name = "test_is_creator_open_always_existing";
+    const char* name = "test_creator_oa_open";
 
     // Clean up any existing
     shared_memory::remove(name);
@@ -112,7 +112,7 @@ TEST_CASE("is_creator() for open_always - opens existing", "[is_creator]") {
 }
 
 TEST_CASE("is_creator() preserved after move constructor", "[is_creator]") {
-    const char* name = "test_is_creator_move_ctor";
+    const char* name = "test_creator_move_c";
 
     // Clean up any existing
     shared_memory::remove(name);
@@ -131,8 +131,8 @@ TEST_CASE("is_creator() preserved after move constructor", "[is_creator]") {
 }
 
 TEST_CASE("is_creator() preserved after move assignment", "[is_creator]") {
-    const char* name1 = "test_is_creator_move_assign_1";
-    const char* name2 = "test_is_creator_move_assign_2";
+    const char* name1 = "test_creator_move_a1";
+    const char* name2 = "test_creator_move_a2";
 
     // Clean up any existing
     shared_memory::remove(name1);
@@ -161,7 +161,7 @@ TEST_CASE("is_creator() preserved after move assignment", "[is_creator]") {
 }
 
 TEST_CASE("is_creator() with no-throw constructors", "[is_creator]") {
-    const char* name = "test_is_creator_nothrow";
+    const char* name = "test_creator_nothrow";
 
     // Clean up any existing
     shared_memory::remove(name);
