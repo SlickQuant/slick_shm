@@ -102,7 +102,7 @@ TEST_CASE("is_creator() for open_always - opens existing", "[is_creator]") {
         shared_memory creator(name, 1024, create_only);
         REQUIRE(creator.is_creator());
 
-        // Open existing with open_always
+        // Open existing with open_always (library now handles macOS limitation gracefully)
         shared_memory opener(name, 1024, open_always);
         REQUIRE(opener.is_valid());
         REQUIRE_FALSE(opener.is_creator());

@@ -18,6 +18,13 @@
 - Add detailed API documentation for `is_creator()` in `docs/api_reference.md` with usage examples
 - Add feature to README features list
 
+### Fixed
+- Fix `open_always` mode on POSIX/macOS when another process has the segment open
+  - Previously would fail with `EINVAL` when attempting to truncate a shared memory segment that's open by another process
+  - Now gracefully preserves existing size instead of failing
+  - Documents limitation in platform notes
+- Shorten test names to comply with macOS 31-character name limit for shared memory segments
+
 ## [v0.1.3] - 2026-01-29
 
 ### Fixed

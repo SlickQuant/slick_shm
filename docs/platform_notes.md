@@ -261,6 +261,7 @@ shared_memory::remove("test");
 - Shared memory persists after crash (manual cleanup needed)
 - Short name limit on macOS (31 chars)
 - System limits may need adjustment for large allocations
+- **`open_always` mode limitation**: On macOS, attempting to truncate an existing shared memory segment with `open_always` while another process has it open will fail with `EINVAL`. The library handles this gracefully by preserving the existing size instead of failing. To ensure `open_always` can resize an existing segment, ensure no other processes have it open, or use `open_or_create` instead which doesn't attempt to resize existing segments.
 
 ## Debugging
 

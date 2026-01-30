@@ -142,11 +142,20 @@ public:
 
         if (created || mode == create_mode::open_always || sb.st_size == 0) {
             if (ftruncate(shm_fd_, static_cast<off_t>(size_)) == -1) {
-                return cleanup_error(get_errno_error());
-            }
-
-            if (fstat(shm_fd_, &sb) == -1) {
-                return cleanup_error(get_errno_error());
+                // On some platforms (notably macOS), ftruncate can fail with EINVAL
+                // if another process has the shared memory segment open. In this case,
+                // for open_always mode on existing segments, we'll use the existing size
+                // rather than failing completely.
+                if (errno == EINVAL && mode == create_mode::open_always && !created) {
+                    // Keep existing size - segment is in use by another process
+                } else {
+                    return cleanup_error(get_errno_error());
+                }
+            } else {
+                // ftruncate succeeded, update size
+                if (fstat(shm_fd_, &sb) == -1) {
+                    return cleanup_error(get_errno_error());
+                }
             }
         }
 
