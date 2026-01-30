@@ -303,6 +303,7 @@ private:
 
     static std::string format_name(const char* name) {
         // POSIX requires name to start with '/'
+        // name is guaranteed non-null and non-empty by is_valid_name() checks
         if (name[0] == '/') {
             return std::string(name);
         }

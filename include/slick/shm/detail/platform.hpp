@@ -5,6 +5,8 @@
 
 #include <cstddef>
 #include <cstring>
+#include "../error.hpp"
+#include "../types.hpp"
 
 // Platform detection
 #if defined(_WIN32) || defined(_WIN64)

@@ -5,6 +5,7 @@
 
 #include <system_error>
 #include <string>
+#include <type_traits>
 
 namespace slick {
 namespace shm {
@@ -96,5 +97,5 @@ public:
 // Make errc compatible with std::error_code
 namespace std {
 template <>
-struct is_error_code_enum<slick::shm::errc> : true_type {};
+struct is_error_code_enum<slick::shm::errc> : std::true_type {};
 }  // namespace std

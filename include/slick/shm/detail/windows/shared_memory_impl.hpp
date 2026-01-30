@@ -113,7 +113,8 @@ public:
                 name_.c_str()
             );
 
-            if (file_mapping_handle_ == nullptr) {
+            if (file_mapping_handle_ == nullptr || file_mapping_handle_ == INVALID_HANDLE_VALUE) {
+                file_mapping_handle_ = INVALID_HANDLE_VALUE;
                 return get_last_error();
             }
 
@@ -134,7 +135,8 @@ public:
                 name_.c_str()
             );
 
-            if (file_mapping_handle_ == nullptr) {
+            if (file_mapping_handle_ == nullptr || file_mapping_handle_ == INVALID_HANDLE_VALUE) {
+                file_mapping_handle_ = INVALID_HANDLE_VALUE;
                 return get_last_error();
             }
         }
@@ -159,7 +161,8 @@ public:
             name_.c_str()
         );
 
-        if (file_mapping_handle_ == nullptr) {
+        if (file_mapping_handle_ == nullptr || file_mapping_handle_ == INVALID_HANDLE_VALUE) {
+            file_mapping_handle_ = INVALID_HANDLE_VALUE;
             DWORD err = GetLastError();
             if (err == ERROR_FILE_NOT_FOUND) {
                 return make_error_code(errc::not_found);
@@ -234,7 +237,7 @@ private:
     access_mode mode_ = access_mode::read_write;
 
     std::error_code map_impl() {
-        if (file_mapping_handle_ == INVALID_HANDLE_VALUE) {
+        if (file_mapping_handle_ == INVALID_HANDLE_VALUE || file_mapping_handle_ == nullptr) {
             return make_error_code(errc::mapping_failed);
         }
 
